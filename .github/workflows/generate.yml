@@ -33,16 +33,15 @@ jobs:
           ${{ runner.os }}-node-
     - run: pip install -r ./requirements.txt
     - run: yarn install --immutable
+
     - name: Build Dependency
       run: |
         yarn workspaces foreach -pt run build
+
     - name: Generate webfonts
       run: |
         yarn workspaces foreach -pt run subset
-    - name: Update example assets
-      run: |
-        cp -f ./packages/pretendard/dist/public/static/Pretendard-*.otf ./examples/flutter_pretendard/fonts
-        cp -f ./packages/pretendard/dist/public/static/Pretendard-*.otf ./examples/react_native_pretendard/assets/fonts
+        
     - name: Commit Build File
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
